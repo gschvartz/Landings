@@ -1,0 +1,124 @@
+-- phpMyAdmin SQL Dump
+-- version 3.3.10.4
+-- http://www.phpmyadmin.net
+--
+-- Servidor: landings.demotores360.com
+-- Tiempo de generación: 13-05-2015 a las 11:32:20
+-- Versión del servidor: 5.1.56
+-- Versión de PHP: 5.3.29
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- Base de datos: `landings`
+--
+CREATE DATABASE `landings` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `landings`;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `concesionaria`
+--
+
+DROP TABLE IF EXISTS `concesionaria`;
+CREATE TABLE IF NOT EXISTS `concesionaria` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idu_site` varchar(10) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `models` varchar(500) DEFAULT NULL,
+  `img_background` varchar(250) DEFAULT NULL,
+  `email` varchar(128) NOT NULL,
+  `adwords_code` text,
+  `legales` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=134 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `contact`
+--
+
+DROP TABLE IF EXISTS `contact`;
+CREATE TABLE IF NOT EXISTS `contact` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `email` varchar(250) DEFAULT NULL,
+  `comment` text,
+  `phone` varchar(250) DEFAULT NULL,
+  `model` varchar(50) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `states` varchar(255) DEFAULT NULL,
+  `font` varchar(50) DEFAULT NULL,
+  `id_landing` int(11) NOT NULL,
+  `id_concesionaria` int(11) NOT NULL,
+  `name_landing` varchar(250) NOT NULL,
+  `name_concesionaria` varchar(250) NOT NULL,
+  `receive` int(11) NOT NULL,
+  `date` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22892 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `landing`
+--
+
+DROP TABLE IF EXISTS `landing`;
+CREATE TABLE IF NOT EXISTS `landing` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_concesionaria` int(11) NOT NULL,
+  `title` varchar(1000) NOT NULL,
+  `title_header` varchar(1000) DEFAULT NULL,
+  `title_footer` varchar(1000) DEFAULT NULL,
+  `content` text NOT NULL,
+  `legales` longtext,
+  `adwords_code` text NOT NULL,
+  `img_background` varchar(250) DEFAULT NULL,
+  `img_1` varchar(250) DEFAULT NULL,
+  `img_2` varchar(250) DEFAULT NULL,
+  `imag_3` varchar(250) DEFAULT NULL,
+  `color_head` varchar(250) DEFAULT NULL,
+  `color_foot` varchar(250) DEFAULT NULL,
+  `color_content` varchar(7) NOT NULL,
+  `color_background_content` varchar(7) NOT NULL,
+  `color_legales` varchar(250) DEFAULT NULL,
+  `font1` varchar(250) DEFAULT NULL,
+  `font2` varchar(250) DEFAULT NULL,
+  `font_content` varchar(4) NOT NULL,
+  `color_msg` varchar(50) DEFAULT NULL,
+  `allow_state` tinyint(1) NOT NULL,
+  `allow_models` tinyint(1) NOT NULL,
+  `allow_comment` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk__landing__id_concesionaria` (`id_concesionaria`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=207 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(128) NOT NULL,
+  `password` varchar(128) NOT NULL,
+  `email` varchar(128) NOT NULL,
+  `salt` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Filtros para las tablas descargadas (dump)
+--
+
+--
+-- Filtros para la tabla `landing`
+--
+ALTER TABLE `landing`
+  ADD CONSTRAINT `fk__landing__id_concesionaria` FOREIGN KEY (`id_concesionaria`) REFERENCES `concesionaria` (`id`);
